@@ -11,19 +11,33 @@ export class Hologram {
         // Unique seeds for this instance's generative shape
         this.seeds = Array.from({length: 12}, () => Math.random() * Math.PI * 2);
 
-        // Advanced Polyhedron (Icosahedron-ish)
+        // Geometry Definitions
         const t = (1 + Math.sqrt(5)) / 2;
-        this.vertices = [
-            {x:-1, y: t, z: 0}, {x: 1, y: t, z: 0}, {x:-1, y:-t, z: 0}, {x: 1, y:-t, z: 0},
-            {x: 0, y:-1, z: t}, {x: 0, y: 1, z: t}, {x: 0, y:-1, z:-t}, {x: 0, y: 1, z:-t},
-            {x: t, y: 0, z:-1}, {x: t, y: 0, z: 1}, {x:-t, y: 0, z:-1}, {x:-t, y: 0, z: 1}
-        ];
+        this.geometries = {
+            icosahedron: [
+                {x:-1, y: t, z: 0}, {x: 1, y: t, z: 0}, {x:-1, y:-t, z: 0}, {x: 1, y:-t, z: 0},
+                {x: 0, y:-1, z: t}, {x: 0, y: 1, z: t}, {x: 0, y:-1, z:-t}, {x: 0, y: 1, z:-t},
+                {x: t, y: 0, z:-1}, {x: t, y: 0, z: 1}, {x:-t, y: 0, z:-1}, {x:-t, y: 0, z: 1}
+            ],
+            cube: [
+                {x:-1, y: 1, z: 1}, {x: 1, y: 1, z: 1}, {x:-1, y:-1, z: 1}, {x: 1, y:-1, z: 1},
+                {x:-1, y: 1, z:-1}, {x: 1, y: 1, z:-1}, {x:-1, y:-1, z:-1}, {x: 1, y:-1, z:-1},
+                {x: 0, y: 1.5, z: 0}, {x: 0, y: -1.5, z: 0}, {x: 1.5, y: 0, z: 0}, {x: -1.5, y: 0, z: 0}
+            ],
+            tetrahedron: [
+                {x: 1, y: 1, z: 1}, {x:-1, y:-1, z: 1}, {x:-1, y: 1, z:-1}, {x: 1, y:-1, z:-1},
+                {x: 0, y: 0, z: 0}, {x: 0, y: 0, z: 0}, {x: 0, y: 0, z: 0}, {x: 0, y: 0, z: 0},
+                {x: 0, y: 0, z: 0}, {x: 0, y: 0, z: 0}, {x: 0, y: 0, z: 0}, {x: 0, y: 0, z: 0}
+            ]
+        };
+
+        this.vertices = this.geometries.icosahedron.map(v => ({...v}));
+        this.targetVertices = this.geometries.icosahedron.map(v => ({...v}));
 
         this.edges = [];
-        for(let i=0; i<this.vertices.length; i++) {
-            for(let j=i+1; j<this.vertices.length; j++) {
-                const d = Math.hypot(this.vertices[i].x - this.vertices[j].x, this.vertices[i].y - this.vertices[j].y, this.vertices[i].z - this.vertices[j].z);
-                if(d < 2.1) this.edges.push([i, j]);
+        for(let i=0; i<12; i++) {
+            for(let j=i+1; j<12; j++) {
+                this.edges.push([i, j]); // Connect all for morph stability
             }
         }
 
@@ -42,6 +56,20 @@ export class Hologram {
             this.mouseX = (e.clientX - window.innerWidth / 2) * 0.0003;
             this.mouseY = (e.clientY - window.innerHeight / 2) * 0.0003;
         });
+
+        // Listen for theme changes to trigger morph
+        const observer = new MutationObserver(() => this.handleThemeChange());
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    }
+
+    handleThemeChange() {
+        const theme = document.documentElement.getAttribute('data-theme');
+        let nextGeo = 'icosahedron';
+        if (theme === 'theme-metaphorical') nextGeo = 'tetrahedron';
+        if (theme === 'theme-champloo') nextGeo = 'cube';
+        if (theme === 'theme-spiritual') nextGeo = 'icosahedron';
+
+        this.targetVertices = this.geometries[nextGeo].map(v => ({...v}));
     }
 
     rotate(v, ax, ay) {
@@ -59,6 +87,14 @@ export class Hologram {
         this.angleX += this.mouseY + 0.002;
         this.angleY += this.mouseX + 0.002;
 
+        // Smooth Vertex Morphing
+        this.vertices.forEach((v, i) => {
+            const target = this.targetVertices[i];
+            v.x += (target.x - v.x) * 0.05;
+            v.y += (target.y - v.y) * 0.05;
+            v.z += (target.z - v.z) * 0.05;
+        });
+
         const theme = document.documentElement.getAttribute('data-theme');
         const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent');
 
@@ -74,10 +110,10 @@ export class Hologram {
 
         const projected = this.vertices.map((v, i) => {
             // Generative "Breathing" logic with unique seeds
-            const pulse = Math.sin(this.time + this.seeds[i]) * 0.25;
+            const pulse = Math.sin(this.time + this.seeds[i]) * 0.15;
             const dv = { x: v.x * (1 + pulse), y: v.y * (1 + pulse), z: v.z * (1 + pulse) };
             const rotated = this.rotate(dv, this.angleX, this.angleY);
-            const scale = 140;
+            const scale = 120;
             const p = 600 / (600 + rotated.z * scale);
             return { x: rotated.x * scale * p + this.width / 2, y: rotated.y * scale * p + this.height / 2 };
         });

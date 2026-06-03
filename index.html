@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="theme-modal-soul">
+<html lang="en" data-theme="theme-metaphorical">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +8,46 @@
 </head>
 <body>
 
+    <canvas id="cursor-canvas"></canvas>
     <div id="custom-cursor"></div>
+
+    <div class="fixed-bg">
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+            <g class="pov-scale">
+              <g class="pov-pan">
+                <image href="https://images.unsplash.com/photo-1771681617105-745758eae89b?q=80&w=3000" width="1000"/>
+                <g class="motion-paths" fill="none">
+                  <path d="M196 434c66-49 230 44 322 18"/>
+                  <path d="M518 452c22-1 228 65 303 56"/>
+                  <path d="M821 508s-81 263-18 399"/>
+                  <path d="M803 907s-238-64-317-47"/>
+                  <path d="M486 860s-160 76-298 17"/>
+                </g>
+                <circle class="focal-point" r="0" fill="transparent"/>
+              </g>
+            </g>
+        </svg>
+    </div>
+
     <div class="bg-overlay"></div>
-    <div class="particles-overlay"></div>
+
+    <!-- 3D IMAGE SCENE -->
+    <div class="scene" id="bg-scene">
+        <div class="a3d" style="--n: 12">
+            <img class="card" src="https://images.unsplash.com/photo-1540968221243-29f5d70540bf?w=280" style="--i: 0" alt="jellyfish"/>
+            <img class="card" src="https://images.unsplash.com/photo-1596135187959-562c650d98bc?w=280" style="--i: 1" alt="jellyfish"/>
+            <img class="card" src="https://images.unsplash.com/photo-1628944682084-831f35256163?w=280" style="--i: 2" alt="jellyfish"/>
+            <img class="card" src="https://images.unsplash.com/photo-1590013330451-3946e83e0392?w=280" style="--i: 3" alt="jellyfish"/>
+            <img class="card" src="https://images.unsplash.com/photo-1590421959604-741d0eec0a2e?w=280" style="--i: 4" alt="jellyfish"/>
+            <img class="card" src="https://images.unsplash.com/photo-1572613000712-eadc57acbecd?w=280" style="--i: 5" alt="jellyfish"/>
+            <img class="card" src="https://images.unsplash.com/photo-1570097192570-4b49a6736f9f?w=280" style="--i: 6" alt="jellyfish"/>
+            <img class="card" src="https://images.unsplash.com/photo-1620789550663-2b10e0080354?w=280" style="--i: 7" alt="jellyfish"/>
+            <img class="card" src="https://images.unsplash.com/photo-1617775623669-20bff4ffaa5c?w=280" style="--i: 8" alt="jellyfish"/>
+            <img class="card" src="https://images.unsplash.com/photo-1548600916-dc8492f8e845?w=280" style="--i: 9" alt="jellyfish"/>
+            <img class="card" src="https://images.unsplash.com/photo-1573824969595-a76d4365a2e6?w=280" style="--i: 10" alt="jellyfish"/>
+            <img class="card" src="https://images.unsplash.com/photo-1633936929709-59991b5fdd72?w=280" style="--i: 11" alt="jellyfish"/>
+        </div>
+    </div>
 
     <!-- PRELOADER -->
     <div id="preloader">
@@ -48,11 +85,25 @@
                 <div style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
                     <canvas id="hologram-canvas"></canvas>
                     <h1 style="font-size: 6vw; letter-spacing: 2vw; font-weight: 200; text-align: center; margin-top: -20px;" data-t="hero_title">MODAL SOUL</h1>
-                    <div class="custom-player cursor-trigger" style="margin-top: 40px; padding: 20px 40px; border: 1px solid var(--border); border-radius: 50px; display: flex; gap: 20px; align-items: center;">
-                        <div class="p-btn" id="play-trigger" style="background:var(--accent); color:#fff; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center;">▶</div>
-                        <div style="text-align: left;">
-                            <div style="font-weight: 700; font-size: 0.8rem;" data-t="audio_title">Eternal Spirit Ambience</div>
-                            <div style="font-size: 0.6rem; opacity: 0.5; font-family:var(--font-mono);">SOURCE: PROCEDURAL_SINE</div>
+                    <div class="music-wheel-container">
+                        <div id="music-wheel" class="cursor-trigger">
+                            <div class="wheel-core">
+                                <div id="play-trigger" class="wheel-play">▶</div>
+                            </div>
+                            <!-- 9 Track Nodes -->
+                            <div class="track-node" data-index="0"></div>
+                            <div class="track-node" data-index="1"></div>
+                            <div class="track-node" data-index="2"></div>
+                            <div class="track-node" data-index="3"></div>
+                            <div class="track-node" data-index="4"></div>
+                            <div class="track-node" data-index="5"></div>
+                            <div class="track-node" data-index="6"></div>
+                            <div class="track-node" data-index="7"></div>
+                            <div class="track-node" data-index="8"></div>
+                        </div>
+                        <div style="text-align: center; margin-top: 20px;">
+                            <div style="font-weight: 700; font-size: 0.8rem; letter-spacing: 5px;" id="current-track-name">MODAL_SOUL_CORE</div>
+                            <div style="font-size: 0.5rem; opacity: 0.5; font-family:var(--font-mono); margin-top: 5px;">ROTARY_SELECTOR_V1</div>
                         </div>
                     </div>
                 </div>

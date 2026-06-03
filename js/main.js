@@ -1,5 +1,7 @@
 import { Hologram } from './modules/hologram.js';
 import { Auth } from './modules/auth.js';
+import { Cursor } from './modules/cursor.js';
+import { AudioEngine } from './modules/audio.js';
 import { Subscription } from './modules/subscription.js';
 import { Admin } from './modules/admin.js';
 import { Slider } from './modules/slider.js';
@@ -16,9 +18,10 @@ class App {
     async init() {
         await this.runPreloader();
         this.setupNavigation();
-        this.setupAudio();
 
         // Modules
+        new Cursor('cursor-canvas');
+        new AudioEngine();
         new Hologram('hologram-canvas');
         new Auth();
         new Subscription();
@@ -55,6 +58,59 @@ class App {
                 this.goToPage(target);
             };
         });
+
+        // Background Interaction & Scroll Parallax
+        const a3d = document.querySelector('.a3d');
+        const povScale = document.querySelector('.pov-scale');
+        const povPan = document.querySelector('.pov-pan');
+        const focalPoint = document.querySelector('.focal-point');
+        const paths = document.querySelectorAll('.motion-paths path');
+
+        // Simple smoothing
+        let scrollY = 0;
+        let lerpY = 0;
+
+        window.addEventListener('wheel', (e) => {
+            scrollY += e.deltaY * 0.5;
+            scrollY = Math.max(0, Math.min(scrollY, 5000));
+        });
+
+        const updateBG = () => {
+            lerpY += (scrollY - lerpY) * 0.1;
+            const progress = (lerpY / 5000); // 0 to 1
+
+            // 1. 3D Scene Rotation
+            if (a3d) a3d.style.transform = `rotateY(${lerpY * 0.05}deg) translateZ(${Math.sin(progress * Math.PI) * 200}px)`;
+
+            // 2. SVG Motion Path (Manual Path calculation for pure JS)
+            if (paths.length > 0 && focalPoint) {
+                const pathIdx = Math.min(Math.floor(progress * paths.length), paths.length - 1);
+                const pathProgress = (progress * paths.length) % 1;
+                const path = paths[pathIdx];
+                const len = path.getTotalLength();
+                const pt = path.getPointAtLength(len * pathProgress);
+
+                // Focal Point following
+                focalPoint.setAttribute('cx', pt.x);
+                focalPoint.setAttribute('cy', pt.y);
+
+                // POV Pan (Inverted Focal Point)
+                if (povPan) {
+                    povPan.style.transform = `translate(${-pt.x}px, ${-pt.y}px)`;
+                }
+
+                // POV Scale/Rotation
+                if (povScale) {
+                    const scale = 3.2 - (progress * 1.2);
+                    const rotate = 20 - (progress * 25);
+                    povScale.style.transform = `translate(500px, 500px) scale(${scale}) rotate(${rotate}deg)`;
+                    povScale.style.transformOrigin = '0 0';
+                }
+            }
+
+            requestAnimationFrame(updateBG);
+        };
+        updateBG();
     }
 
     goToPage(pageId) {
@@ -87,47 +143,6 @@ class App {
                 this.isTransitioning = false;
             });
         }, 800);
-    }
-
-    setupAudio() {
-        let audioCtx;
-        const playBtn = document.getElementById('play-trigger');
-
-        playBtn.onclick = () => {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-                // Procedural Vinyl Noise (White noise + filtering)
-                const bufferSize = 2 * audioCtx.sampleRate;
-                const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-                const output = noiseBuffer.getChannelData(0);
-                for (let i = 0; i < bufferSize; i++) {
-                    output[i] = (Math.random() * 2 - 1) * 0.02; // Soft noise
-                }
-
-                const noise = audioCtx.createBufferSource();
-                noise.buffer = noiseBuffer;
-                noise.loop = true;
-
-                const filter = audioCtx.createBiquadFilter();
-                filter.type = 'lowpass';
-                filter.frequency.value = 1000;
-
-                noise.connect(filter);
-                filter.connect(audioCtx.destination);
-                noise.start();
-
-                playBtn.innerText = '⏸';
-            } else {
-                if (audioCtx.state === 'running') {
-                    audioCtx.suspend();
-                    playBtn.innerText = '▶';
-                } else {
-                    audioCtx.resume();
-                    playBtn.innerText = '⏸';
-                }
-            }
-        };
     }
 }
 

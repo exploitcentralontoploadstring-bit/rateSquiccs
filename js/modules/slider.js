@@ -29,10 +29,6 @@ export class Slider {
     stopScrubbing() {
         clearInterval(this.scrubInterval);
         this.scrubInterval = null;
-
-        // Auto-fix layout to the current item
-        const activeAlbum = this.slides[this.currentIdx].dataset.album || "Modal Soul";
-        console.log(`[SYS] Scrub fixed on: ${activeAlbum}`);
     }
 
     next() {

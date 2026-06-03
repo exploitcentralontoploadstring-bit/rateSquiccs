@@ -60,17 +60,25 @@ body {
     transition: background-color var(--transition), color var(--transition);
 }
 
+/* CURSOR CANVAS */
+#cursor-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 1000001;
+    pointer-events: none;
+}
+
 /* CUSTOM CURSOR */
 #custom-cursor {
     position: fixed;
-    width: 12px;
-    height: 12px;
-    background: var(--accent);
+    width: 8px;
+    height: 8px;
+    background: #fff;
     border-radius: 50%;
     pointer-events: none;
-    z-index: 1000000;
+    z-index: 1000002;
     mix-blend-mode: difference;
-    transition: transform 0.15s ease-out, background 0.3s;
+    transition: transform 0.1s ease-out;
     transform: translate(-50%, -50%);
 }
 .cursor-hover #custom-cursor {
@@ -96,19 +104,53 @@ body {
     opacity: 0.05;
 }
 
-.particles-overlay {
+/* FIXED BG & SVG MOTION */
+.fixed-bg {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    overflow: hidden;
+    z-index: -2;
+}
+.fixed-bg svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.2;
+    transition: opacity 0.5s;
+}
+.pov-scale, .pov-pan {
+    transition: transform 0.1s linear;
+}
+
+/* 3D SCENE */
+.scene {
     position: fixed;
     inset: 0;
     z-index: -1;
-    background-image: radial-gradient(var(--accent) 1px, transparent 1px);
-    background-size: 80px 80px;
-    animation: particlesMove 60s linear infinite;
-    opacity: 0.1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1000px;
+    pointer-events: none;
 }
-
-@keyframes particlesMove {
-    from { transform: translateY(0) rotate(0deg); }
-    to { transform: translateY(-1000px) rotate(10deg); }
+.a3d {
+    transform-style: preserve-3d;
+    position: relative;
+    width: 0; height: 0;
+}
+.card {
+    position: absolute;
+    width: 200px;
+    height: 280px;
+    margin: -140px -100px;
+    background: #000;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    --angle: calc(var(--i) * 1turn / var(--n));
+    transform: rotateY(var(--angle)) translateZ(600px);
+    opacity: 0.6;
 }
 
 /* 3D VIEWPORT */
@@ -264,3 +306,56 @@ nav {
     overflow: hidden;
 }
 .morph-path { fill: var(--accent); transition: 0.3s; }
+
+/* MUSIC WHEEL */
+.music-wheel-container {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#music-wheel {
+    width: 180px;
+    height: 180px;
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.wheel-core {
+    width: 60px;
+    height: 60px;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.3);
+}
+.wheel-play {
+    color: var(--accent);
+    font-size: 1.2rem;
+    transition: 0.3s;
+}
+.track-node {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--text);
+    border-radius: 50%;
+    opacity: 0.3;
+    transition: 0.3s;
+    --angle: calc(var(--index) * 360deg / 9);
+    transform: rotate(var(--angle)) translateY(-75px);
+}
+.track-node.active {
+    opacity: 1;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    transform: rotate(var(--angle)) translateY(-75px) scale(1.5);
+}
