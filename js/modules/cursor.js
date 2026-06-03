@@ -51,25 +51,29 @@ export class Cursor {
         const theme = document.documentElement.getAttribute('data-theme');
         const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent');
 
+        this.ctx.shadowBlur = 10;
+
         // Draw multiple layers for "tube" effect
         for (let i = 0; i < 3; i++) {
             this.ctx.beginPath();
-            this.ctx.lineWidth = (3 - i) * 4;
+            this.ctx.lineWidth = (3 - i) * 3;
             this.ctx.lineCap = 'round';
             this.ctx.lineJoin = 'round';
 
             // Use user-provided colors or theme accent
-            this.ctx.strokeStyle = i === 0 ? accent : this.colors[i-1];
-            this.ctx.globalAlpha = 0.3 / (i + 1);
+            const color = i === 0 ? accent : this.colors[i-1];
+            this.ctx.strokeStyle = color;
+            this.ctx.shadowColor = color;
+            this.ctx.globalAlpha = 0.4 / (i + 1);
 
             this.ctx.moveTo(this.points[0].x, this.points[0].y);
             for (let j = 1; j < this.points.length; j++) {
-                // Bezier curves for organic movement
                 const xc = (this.points[j].x + this.points[j - 1].x) / 2;
                 const yc = (this.points[j].y + this.points[j - 1].y) / 2;
                 this.ctx.quadraticCurveTo(this.points[j - 1].x, this.points[j - 1].y, xc, yc);
             }
             this.ctx.stroke();
         }
+        this.ctx.shadowBlur = 0;
     }
 }

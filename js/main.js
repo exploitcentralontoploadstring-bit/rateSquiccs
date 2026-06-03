@@ -5,6 +5,7 @@ import { AudioEngine } from './modules/audio.js';
 import { Subscription } from './modules/subscription.js';
 import { Admin } from './modules/admin.js';
 import { Slider } from './modules/slider.js';
+import { Background } from './modules/background.js';
 
 class App {
     constructor() {
@@ -20,8 +21,9 @@ class App {
         this.setupNavigation();
 
         // Modules
+        new Background();
         new Cursor('cursor-canvas');
-        new AudioEngine();
+        this.audio = new AudioEngine();
         new Hologram('hologram-canvas');
         new Auth();
         new Subscription();

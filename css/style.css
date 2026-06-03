@@ -60,6 +60,14 @@ body {
     transition: background-color var(--transition), color var(--transition);
 }
 
+/* GENERATIVE BG */
+#generative-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    pointer-events: none;
+}
+
 /* CURSOR CANVAS */
 #cursor-canvas {
     position: fixed;
@@ -200,6 +208,21 @@ body {
     font-weight: 700;
     color: #fff;
     letter-spacing: -1vw;
+}
+
+.qr-placeholder {
+    width: 60px;
+    height: 60px;
+    border: 1px solid var(--accent);
+    margin-top: 30px;
+    position: relative;
+    opacity: 0.5;
+}
+.qr-placeholder::after {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    background: repeating-conic-gradient(var(--accent) 0% 25%, transparent 0% 50%) 50% / 10px 10px;
 }
 
 /* NAVBAR */
@@ -358,4 +381,30 @@ nav {
     background: var(--accent);
     box-shadow: 0 0 10px var(--accent);
     transform: rotate(var(--angle)) translateY(-75px) scale(1.5);
+}
+
+/* DEV PANEL */
+.dev-trigger {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--accent);
+    opacity: 0.1;
+    cursor: pointer;
+    z-index: 1000000;
+    transition: 0.3s;
+}
+.dev-trigger:hover {
+    opacity: 1;
+}
+
+@keyframes error-shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+.error-shake {
+    animation: error-shake 0.2s cubic-bezier(.36,.07,.19,.97) both;
 }

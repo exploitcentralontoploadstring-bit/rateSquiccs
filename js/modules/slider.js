@@ -35,5 +35,12 @@ export class Slider {
         this.slides[this.currentIdx].classList.remove('active');
         this.currentIdx = (this.currentIdx + 1) % this.slides.length;
         this.slides[this.currentIdx].classList.add('active');
+
+        // Sync with Music Selection
+        if (window.app && window.app.audio) {
+            window.app.audio.currentIndex = this.currentIdx % 9;
+            window.app.audio.updateWheel();
+            if (window.app.audio.isPlaying) window.app.audio.updateSound();
+        }
     }
 }

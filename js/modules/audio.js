@@ -72,13 +72,38 @@ export class AudioEngine {
     setupSynth() {
         this.osc = this.ctx.createOscillator();
         this.gain = this.ctx.createGain();
+        this.filter = this.ctx.createBiquadFilter();
+        this.noise = this.ctx.createBufferSource();
 
-        this.osc.type = 'sine';
-        this.gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
+        // Low-pass filter for warmth
+        this.filter.type = 'lowpass';
+        this.filter.frequency.setValueAtTime(800, this.ctx.currentTime);
+        this.filter.Q.setValueAtTime(1, this.ctx.currentTime);
 
-        this.osc.connect(this.gain);
+        this.osc.type = 'triangle'; // Warmer than sine
+        this.gain.gain.setValueAtTime(0.05, this.ctx.currentTime);
+
+        // Add subtle vinyl noise
+        const bufferSize = 2 * this.ctx.sampleRate;
+        const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+            output[i] = Math.random() * 2 - 1;
+        }
+        this.noise.buffer = noiseBuffer;
+        this.noise.loop = true;
+        const noiseGain = this.ctx.createGain();
+        noiseGain.gain.setValueAtTime(0.01, this.ctx.currentTime);
+
+        this.noise.connect(noiseGain);
+        noiseGain.connect(this.filter);
+
+        this.osc.connect(this.filter);
+        this.filter.connect(this.gain);
         this.gain.connect(this.ctx.destination);
+
         this.osc.start();
+        this.noise.start();
     }
 
     updateSound() {
@@ -86,5 +111,8 @@ export class AudioEngine {
         // Map track index to frequency (pentatonic scale for "Zen" vibe)
         const freqs = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25, 783.99];
         this.osc.frequency.setTargetAtTime(freqs[this.currentIndex], this.ctx.currentTime, 0.2);
+
+        // Slightly vary filter based on track
+        this.filter.frequency.setTargetAtTime(600 + (this.currentIndex * 100), this.ctx.currentTime, 0.5);
     }
 }
