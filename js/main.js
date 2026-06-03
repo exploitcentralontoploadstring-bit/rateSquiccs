@@ -2,6 +2,7 @@ import { ThemeManager } from './modules/theme.js';
 import { ParticleSystem } from './modules/background.js';
 import { AuthMorpher } from './modules/auth.js';
 import { SubscriptionModule } from './modules/subscription.js';
+import { AdminPanel } from './modules/admin.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize Theme Manager
@@ -15,4 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize Subscription Module
     const subscription = new SubscriptionModule();
+
+    // Initialize Admin Panel with dependencies
+    const admin = new AdminPanel({
+        themeManager,
+        auth,
+        subscription
+    });
 });

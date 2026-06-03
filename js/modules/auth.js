@@ -11,6 +11,29 @@ export class AuthMorpher {
 
     init() {
         window.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+        this.setupFormSubmit();
+    }
+
+    setupFormSubmit() {
+        const form = document.getElementById('login-form');
+        if (!form) return;
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.showSuccess(form, "Access Granted. Initializing Secure Session...");
+        });
+    }
+
+    showSuccess(form, message) {
+        form.innerHTML = `<div class="success-message">${message}</div>`;
+        form.classList.add('authorized');
+
+        // Custom warning (alert) used as notification
+        const alert = document.createElement('div');
+        alert.className = 'custom-alert visible';
+        alert.textContent = "Welcome back, Architect.";
+        document.body.appendChild(alert);
+        setTimeout(() => alert.remove(), 3000);
     }
 
     handleMouseMove(e) {

@@ -23,10 +23,30 @@ export class SubscriptionModule {
         this.setupMascotLogic();
         this.setupAntiCopyPaste();
         this.randomizePlaceholders();
+        this.setupFormSubmit();
+    }
+
+    setupFormSubmit() {
+        this.form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(this.emailInput.value)) {
+                this.showWarning("Invalid neural address.");
+                return;
+            }
+
+            if (this.passwordInput.value !== this.confirmPasswordInput.value) {
+                this.showWarning("Keys do not match. Synchronization failed.");
+                return;
+            }
+
+            this.showWarning("Subscription Processed. Welcome to the elite.");
+            this.form.innerHTML = '<div class="success-message">Link established. Check your terminal.</div>';
+        });
     }
 
     setupMasks() {
-        // Card mask: XXXX-XXXX-XXXX-XXXX
         this.cardInput.addEventListener('input', (e) => {
             let value = e.target.value.replace(/\D/g, '');
             let formatted = '';
@@ -35,14 +55,6 @@ export class SubscriptionModule {
                 formatted += value[i];
             }
             e.target.value = formatted;
-        });
-
-        // Email validation on blur
-        this.emailInput.addEventListener('blur', () => {
-            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!regex.test(this.emailInput.value)) {
-                this.showWarning("That doesn't look like a valid frequency.");
-            }
         });
     }
 
@@ -74,10 +86,10 @@ export class SubscriptionModule {
 
         if (strength === 'strong') {
             this.mascot.classList.add('impressed');
-            if (mascotMouth) mascotMouth.setAttribute('d', 'M 40 70 Q 50 85 60 70'); // Smile
+            if (mascotMouth) mascotMouth.setAttribute('d', 'M 40 70 Q 50 85 60 70');
         } else {
             this.mascot.classList.remove('impressed');
-            if (mascotMouth) mascotMouth.setAttribute('d', 'M 40 75 Q 50 75 60 75'); // Flat
+            if (mascotMouth) mascotMouth.setAttribute('d', 'M 40 75 Q 50 75 60 75');
         }
     }
 
@@ -86,8 +98,6 @@ export class SubscriptionModule {
             e.preventDefault();
             this.showWarning("Nice try, human. Type it yourself for better muscle memory.");
             this.randomizePlaceholders();
-
-            // Shake effect
             this.confirmPasswordInput.classList.add('shake');
             setTimeout(() => this.confirmPasswordInput.classList.remove('shake'), 500);
         });
