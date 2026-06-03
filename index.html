@@ -1,117 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="theme-modal-soul">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Digital Experience | High-End Brand</title>
+    <title>Nujabes | Eternal Archive</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <canvas id="bg-canvas"></canvas>
 
-    <main>
-        <!-- Module 1: Auth Morphing -->
-        <section class="auth-section">
-            <div class="parallax-lines">
-                <div class="parallax-line line-1"></div>
-                <div class="parallax-line line-2"></div>
-                <div class="parallax-line line-3"></div>
-            </div>
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="pre-counter">00</div>
+        <div class="css-qr">
+            <div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot" style="opacity:0"></div>
+            <div class="qr-dot"></div><div class="qr-dot" style="opacity:0"></div><div class="qr-dot"></div><div class="qr-dot"></div>
+            <div class="qr-dot" style="opacity:0"></div><div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot"></div>
+            <div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot" style="opacity:0"></div><div class="qr-dot"></div>
+            <div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot"></div>
+            <div class="qr-dot" style="opacity:0"></div><div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot"></div>
+            <div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot" style="opacity:0"></div><div class="qr-dot"></div>
+            <div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot"></div>
+        </div>
+        <p style="margin-top:20px; font-family:var(--font-mono); font-size:10px; letter-spacing:5px;">INITIALIZING SEBA_OS</p>
+    </div>
 
-            <div class="auth-container">
-                <h2>Access Portal</h2>
-                <form id="login-form">
-                    <div class="form-group">
-                        <label>Identifier</label>
-                        <input type="text" class="form-input" placeholder="Enter your ID" required>
+    <!-- NAVBAR -->
+    <nav>
+        <div class="nav-logo">
+            <svg width="30" height="30" viewBox="0 0 200 200" style="fill:var(--accent)">
+                <path d="M 100 30 A 70 70 0 1 1 95 30.1" fill="none" stroke="currentColor" stroke-width="15" stroke-linecap="round"/>
+                <circle cx="100" cy="100" r="20" fill="currentColor"/>
+            </svg>
+            <span>NUJABES</span>
+        </div>
+        <ul class="nav-links">
+            <li class="nav-link" data-page="p1">Home</li>
+            <li class="nav-link" data-page="p2">Albums</li>
+            <li class="nav-link" data-page="p3">Access</li>
+        </ul>
+    </nav>
+
+    <!-- VIEWPORT -->
+    <div id="app-viewport">
+        <div id="book-container">
+
+            <!-- PAGE 1: HOME -->
+            <section class="page active" id="p1">
+                <div class="hologram-stage">
+                    <canvas id="hologram-canvas"></canvas>
+                </div>
+                <div style="text-align: center;">
+                    <h1 style="font-size: 4rem; letter-spacing: 20px; font-weight: 300;">MODAL SOUL</h1>
+                    <div class="custom-player">
+                        <div class="p-btn" id="play-trigger">▶</div>
+                        <div style="text-align: left;">
+                            <div style="font-weight: 700; font-size: 0.9rem;">Eternal Spirit Ambience</div>
+                            <div style="font-size: 0.7rem; opacity: 0.6; font-family:var(--font-mono);">PROCEDURAL_LOFI_GEN</div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Security Key</label>
-                        <input type="password" class="form-input" placeholder="••••••••" required>
+                </div>
+            </section>
+
+            <!-- PAGE 2: ALBUMS -->
+            <section class="page" id="p2">
+                <h2 style="text-align: center; letter-spacing: 15px; margin-bottom: 30px;">COLLECTION</h2>
+                <div class="slider-container">
+                    <div class="slide active">
+                        <div class="album-art" style="background: linear-gradient(45deg, var(--accent-dark), var(--accent))"></div>
+                        <div style="position: absolute; bottom: 20px; font-family: var(--font-mono); letter-spacing: 5px;">METAPHORICAL MUSIC / 2003</div>
                     </div>
-                    <button type="submit" class="auth-submit-btn">
-                        <span>Enter</span>
-                        <svg viewBox="0 0 200 60" preserveAspectRatio="none">
-                            <path class="btn-morph-path" d="M 10 10 Q 100 10 190 10 Q 190 30 190 50 Q 100 50 10 50 Q 10 30 10 10 Z" />
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 900px; margin: 0 auto;">
+                    <div style="padding: 20px; border: 1px solid var(--border);">01. Blessing It</div>
+                    <div style="padding: 20px; border: 1px solid var(--border);">02. Horn In The Middle</div>
+                    <div style="padding: 20px; border: 1px solid var(--border);">03. Lady Brown</div>
+                </div>
+            </section>
+
+            <!-- PAGE 3: ACCESS -->
+            <section class="page" id="p3">
+                <div class="form-grid">
+                    <div>
+                        <h2 style="letter-spacing: 10px; margin-bottom: 40px;">VINYL ACCESS</h2>
+                        <form id="vinyl-form">
+                            <input type="email" id="email-input" class="input-box" placeholder="NEURAL EMAIL" required>
+                            <input type="text" id="card-input" class="input-box" placeholder="CREDITS CARD (0000-0000-0000-0000)" required>
+                            <input type="password" id="pass-input" class="input-box" placeholder="ACCESS KEY" required>
+
+                            <div class="morph-button-wrap" id="morph-btn">
+                                <svg class="morph-svg" viewBox="0 0 200 60" preserveAspectRatio="none">
+                                    <path id="morph-path" class="morph-path" d="M 0 0 Q 100 0 200 0 L 200 60 Q 100 60 0 60 Z" />
+                                </svg>
+                                <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; letter-spacing: 5px; color: #fff; pointer-events: none;">
+                                    INITIALIZE ORDER
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                        <svg id="mascot-svg" width="200" height="200" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="var(--accent)" stroke-width="2"/>
+                            <path d="M 30 40 L 70 40 L 70 80 L 30 80 Z" fill="var(--text)" opacity="0.8"/>
+                            <!-- Eyes -->
+                            <circle class="eye" cx="40" cy="55" r="3" fill="var(--bg)"/>
+                            <circle class="eye" cx="60" cy="55" r="3" fill="var(--bg)"/>
+                            <!-- Mouth -->
+                            <path class="mouth" d="M 40 70 Q 50 70 60 70" stroke="var(--bg)" stroke-width="2" fill="none"/>
                         </svg>
-                    </button>
-                </form>
-            </div>
-        </section>
-
-        <!-- Module 3: Subscription & Mascot -->
-        <section class="subscription-section container">
-            <div class="mascot-container">
-                <svg viewBox="0 0 100 100">
-                    <circle class="mascot-body" cx="50" cy="50" r="45" />
-                    <circle class="mascot-eye" cx="35" cy="40" r="8" />
-                    <circle class="mascot-eye" cx="65" cy="40" r="8" />
-                    <circle class="mascot-eye-pupil" cx="35" cy="40" r="3" />
-                    <circle class="mascot-eye-pupil" cx="65" cy="40" r="3" />
-                    <path class="mascot-mouth" d="M 40 75 Q 50 75 60 75" stroke="black" stroke-width="2" fill="none" />
-                    <g class="mascot-hands">
-                        <rect x="25" y="80" width="15" height="10" rx="5" />
-                        <rect x="60" y="80" width="15" height="10" rx="5" />
-                    </g>
-                </svg>
-            </div>
-
-            <div class="auth-container">
-                <h2>Join the Elite</h2>
-                <form id="subscription-form">
-                    <div class="form-group">
-                        <label>Neural Email</label>
-                        <input type="email" id="sub-email" class="form-input" placeholder="you@frequency.com" required>
+                        <p style="margin-top: 20px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 4px; opacity: 0.5;">ARCHIVE_GUARDIAN_V1</p>
                     </div>
-                    <div class="form-group">
-                        <label>Secure Key</label>
-                        <input type="password" id="sub-password" class="form-input" placeholder="••••••••" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Confirm Key</label>
-                        <input type="password" id="sub-confirm" class="form-input" placeholder="••••••••" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Credits (Card)</label>
-                        <input type="text" id="sub-card" class="form-input" placeholder="0000-0000-0000-0000" required>
-                    </div>
-                    <button type="submit" class="auth-submit-btn">
-                        <span>Subscribe</span>
-                        <svg viewBox="0 0 200 60" preserveAspectRatio="none">
-                            <path class="btn-morph-path" d="M 10 10 Q 100 10 190 10 Q 190 30 190 50 Q 100 50 10 50 Q 10 30 10 10 Z" />
-                        </svg>
-                    </button>
-                </form>
-            </div>
-        </section>
-
-        <!-- Module 4: Content Longread -->
-        <section class="longread-section container" id="longread">
-            <article>
-                <h1>The Future of Human-Centric Code</h1>
-                <p class="lead-text">In an era of automated templates, the soul of digital experience lies in the precision of custom engineering.</p>
-
-                <div class="content-block">
-                    <h2>Chapter I: The Particle Dance</h2>
-                    <p>Observe the background. It isn't a static image or a pre-rendered video. It's a living mathematical ecosystem. Every particle calculates its trajectory in real-time, influenced by your presence and the invisible waves of the Perlin noise field.</p>
-                    <p>When you click, you don't just trigger an event; you create a ripple in the fabric of the interface. This is damped oscillation in action—physics translated into pixels.</p>
                 </div>
+            </section>
 
-                <div class="content-block">
-                    <h2>Chapter II: Emotional Interfaces</h2>
-                    <p>Why should forms be cold and clinical? Our authentication portal morphs its very geometry as you approach it. The mascot doesn't just sit there—it watches, judges, and celebrates your security choices. This is the "Dark Side" of UX: an interface that has an opinion.</p>
-                </div>
+        </div>
+    </div>
 
-                <div class="content-block">
-                    <h2>Chapter III: The Chameleon Core</h2>
-                    <p>Whether it's the stark clarity of high noon or the neon-soaked streets of a cyberpunk future, the interface adapts. Through a rigid hierarchy of CSS Custom Properties, we achieve WCAG AAA compliance without sacrificing aesthetic audacity.</p>
-                </div>
-            </article>
-        </section>
-    </main>
+    <!-- DEV TOOLS -->
+    <div class="dev-trigger" id="dev-trigger">[SYS_DEV]</div>
+    <div id="dev-panel">
+        <div style="border-bottom: 1px solid #333; margin-bottom: 10px; padding-bottom: 5px;">DEBUGGER_CONSOLE</div>
+        <button class="dev-btn" id="bypass-auth">> Bypass Auth</button>
+        <button class="dev-btn" id="force-fill">> Force Fill & Submit</button>
+        <div style="margin-top: 10px;">THEME_OVERRIDE:</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 5px;">
+            <button class="theme-btn dev-btn" data-theme="theme-modal-soul">Modal</button>
+            <button class="theme-btn dev-btn" data-theme="theme-metaphorical">Metaphor</button>
+            <button class="theme-btn dev-btn" data-theme="theme-champloo">Champloo</button>
+            <button class="theme-btn dev-btn" data-theme="theme-spiritual">Spiritual</button>
+        </div>
+    </div>
 
     <script type="module" src="js/main.js"></script>
 </body>

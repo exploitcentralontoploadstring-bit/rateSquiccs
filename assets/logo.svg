@@ -1,0 +1,26 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Nujabes High-End Vector Logo -->
+  <!-- Background Cream -->
+  <rect width="200" height="200" fill="#F2EBDC" rx="10" />
+
+  <!-- Enso Circle / Vinyl Record Base -->
+  <circle cx="100" cy="100" r="80" fill="none" stroke="#1A1A1A" stroke-width="1.5" opacity="0.1" />
+  <circle cx="100" cy="100" r="70" fill="none" stroke="#1A1A1A" stroke-width="1" opacity="0.1" />
+  <circle cx="100" cy="100" r="60" fill="none" stroke="#1A1A1A" stroke-width="1" opacity="0.1" />
+
+  <!-- Enso Brush Stroke -->
+  <path d="M 100 30 A 70 70 0 1 1 95 30.1" fill="none" stroke="#1A1A1A" stroke-width="8" stroke-linecap="round" stroke-dasharray="400 100" stroke-dashoffset="50">
+    <animate attributeName="stroke-dashoffset" from="450" to="50" dur="2s" fill="freeze" />
+  </path>
+
+  <!-- Record Tracks (Grooves) -->
+  <circle cx="100" cy="100" r="45" fill="none" stroke="#1A1A1A" stroke-width="0.5" />
+  <circle cx="100" cy="100" r="35" fill="none" stroke="#1A1A1A" stroke-width="0.5" />
+
+  <!-- Rising Sun / Center Label -->
+  <circle cx="100" cy="100" r="18" fill="#D97941" />
+  <circle cx="100" cy="100" r="4" fill="#F2EBDC" />
+
+  <!-- Typography -->
+  <text x="100" y="185" font-family="Verdana, Geneva, sans-serif" font-size="14" font-weight="bold" fill="#1A1A1A" text-anchor="middle" letter-spacing="8">NUJABES</text>
+</svg>

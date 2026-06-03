@@ -1,71 +1,29 @@
-export class AuthMorpher {
+export class Auth {
     constructor() {
-        this.button = document.querySelector('.auth-submit-btn');
-        this.svgPath = document.querySelector('.btn-morph-path');
-        this.container = document.querySelector('.auth-container');
-        this.parallaxLines = document.querySelectorAll('.parallax-line');
-        if (!this.button || !this.svgPath) return;
+        this.btn = document.getElementById('morph-btn');
+        this.path = document.getElementById('morph-path');
+        if (!this.btn || !this.path) return;
 
-        this.init();
+        this.initMorph();
     }
 
-    init() {
-        window.addEventListener('mousemove', (e) => this.handleMouseMove(e));
-        this.setupFormSubmit();
-    }
+    initMorph() {
+        this.btn.addEventListener('mousemove', (e) => {
+            const rect = this.btn.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
 
-    setupFormSubmit() {
-        const form = document.getElementById('login-form');
-        if (!form) return;
+            // Warp the SVG path based on mouse position
+            const distortion = 15;
+            const dx = (x / rect.width - 0.5) * distortion;
+            const dy = (y / rect.height - 0.5) * distortion;
 
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.showSuccess(form, "Access Granted. Initializing Secure Session...");
+            this.path.setAttribute('d', `M 0 0 Q ${100 + dx} ${dy} 200 0 L 200 60 Q ${100 - dx} ${60 + dy} 0 60 Z`);
         });
-    }
 
-    showSuccess(form, message) {
-        form.innerHTML = `<div class="success-message">${message}</div>`;
-        form.classList.add('authorized');
-
-        // Custom warning (alert) used as notification
-        const alert = document.createElement('div');
-        alert.className = 'custom-alert visible';
-        alert.textContent = "Welcome back, Architect.";
-        document.body.appendChild(alert);
-        setTimeout(() => alert.remove(), 3000);
-    }
-
-    handleMouseMove(e) {
-        const rect = this.button.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-
-        const dx = (e.clientX - centerX) / (window.innerWidth / 2);
-        const dy = (e.clientY - centerY) / (window.innerHeight / 2);
-
-        // Morph SVG path based on mouse proximity
-        this.morphButton(dx, dy);
-
-        // Parallax lines logic
-        this.parallaxLines.forEach((line, i) => {
-            const speed = (i + 1) * 0.02;
-            const lx = dx * 50 * speed;
-            const ly = dy * 50 * speed;
-            line.style.transform = `translate(${lx}px, ${ly}px)`;
+        this.btn.addEventListener('mouseleave', () => {
+            // Reset to rectangle
+            this.path.setAttribute('d', 'M 0 0 Q 100 0 200 0 L 200 60 Q 100 60 0 60 Z');
         });
-    }
-
-    morphButton(dx, dy) {
-        // Base rectangular-ish path with organic curves that react to mouse
-        const intensity = 15;
-        const p1 = { x: 10 + dx * intensity, y: 10 + dy * intensity };
-        const p2 = { x: 190 - dx * intensity, y: 10 - dy * intensity };
-        const p3 = { x: 190 + dx * intensity, y: 50 + dy * intensity };
-        const p4 = { x: 10 - dx * intensity, y: 50 - dy * intensity };
-
-        const path = `M ${p1.x} ${p1.y} Q 100 ${10 + dy * intensity * 2} ${p2.x} ${p2.y} Q ${190 + dx * intensity * 2} 30 ${p3.x} ${p3.y} Q 100 ${50 - dy * intensity * 2} ${p4.x} ${p4.y} Q ${10 - dx * intensity * 2} 30 ${p1.x} ${p1.y} Z`;
-
-        this.svgPath.setAttribute('d', path);
     }
 }
