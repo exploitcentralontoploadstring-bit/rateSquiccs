@@ -1,0 +1,388 @@
+:root {
+    /* Base spacing and typography */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+    --spacing-xl: 8rem;
+
+    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'Space Mono', monospace;
+
+    /* Transition speeds */
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* DEFAULT THEME: DAY (Light) */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f4f4f9;
+    --bg-surface: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #4a4a4a;
+    --accent: #0055ff;
+    --accent-hover: #0044cc;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --shadow-color: rgba(0, 0, 0, 0.05);
+    --selection-bg: rgba(0, 85, 255, 0.2);
+
+    /* Animation variables */
+    --parallax-x: 0px;
+    --parallax-y: 0px;
+}
+
+[data-theme="night"] {
+    --bg-primary: #0a0a0c;
+    --bg-secondary: #121217;
+    --bg-surface: #1a1a21;
+    --text-primary: #f0f0f0;
+    --text-secondary: #a0a0a0;
+    --accent: #00ccff;
+    --accent-hover: #00aadd;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --selection-bg: rgba(0, 204, 255, 0.3);
+}
+
+[data-theme="sepia"] {
+    --bg-primary: #f4ecd8;
+    --bg-secondary: #e8dfc4;
+    --bg-surface: #fdf6e3;
+    --text-primary: #5b4636;
+    --text-secondary: #8c6a51;
+    --accent: #9b4d1c;
+    --accent-hover: #7d3e17;
+    --border-color: rgba(91, 70, 54, 0.15);
+    --shadow-color: rgba(91, 70, 54, 0.05);
+    --selection-bg: rgba(155, 77, 28, 0.2);
+}
+
+[data-theme="cyberpunk"] {
+    --bg-primary: #000000;
+    --bg-secondary: #0a0a0a;
+    --bg-surface: #111111;
+    --text-primary: #00ff00; /* Neon Green */
+    --text-secondary: #ff00ff; /* Neon Magenta */
+    --accent: #ffff00; /* Neon Yellow */
+    --accent-hover: #ffffff;
+    --border-color: #00ff00;
+    --shadow-color: rgba(0, 255, 0, 0.2);
+    --selection-bg: rgba(255, 255, 255, 0.3);
+    --font-main: 'Space Mono', monospace;
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    line-height: 1.6;
+    transition: background-color var(--transition-smooth), color var(--transition-smooth);
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+    line-height: 1.1;
+    margin-bottom: var(--spacing-sm);
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+}
+
+/* Layout Utilities */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+.section {
+    padding: var(--spacing-xl) 0;
+}
+
+/* Theme Switcher Styles */
+.theme-switcher-container {
+    position: fixed;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    z-index: 1000;
+    background: var(--bg-surface);
+    padding: 6px;
+    border-radius: 30px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 20px var(--shadow-color);
+    backdrop-filter: blur(10px);
+}
+
+.theme-toggle {
+    position: relative;
+    display: flex;
+    gap: 4px;
+}
+
+.theme-btn {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-btn .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--text-secondary);
+    transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.theme-btn[data-theme-id="day"] .dot { background: #ffcc00; }
+.theme-btn[data-theme-id="night"] .dot { background: #5c5cff; }
+.theme-btn[data-theme-id="sepia"] .dot { background: #8c6a51; }
+.theme-btn[data-theme-id="cyberpunk"] .dot { background: #00ff00; }
+
+.theme-btn:hover .dot {
+    transform: scale(1.2);
+}
+
+.active-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: var(--accent);
+    opacity: 0.15;
+    border-radius: 20px;
+    transition: left 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28), width 0.4s;
+    z-index: 0;
+}
+
+/* Auth Section Styles */
+.auth-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-container {
+    background: var(--bg-surface);
+    padding: var(--spacing-lg);
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 40px var(--shadow-color);
+    z-index: 10;
+    width: 100%;
+    max-width: 400px;
+    backdrop-filter: blur(5px);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-family: inherit;
+    transition: border-color var(--transition-fast);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.auth-submit-btn {
+    width: 100%;
+    position: relative;
+    height: 60px;
+    margin-top: var(--spacing-md);
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.auth-submit-btn svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.btn-morph-path {
+    fill: var(--accent);
+    transition: fill var(--transition-smooth);
+}
+
+.parallax-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.parallax-line {
+    position: absolute;
+    background: var(--accent);
+    opacity: 0.1;
+}
+
+.line-1 { top: 20%; left: 10%; width: 200px; height: 1px; }
+.line-2 { top: 70%; left: 60%; width: 300px; height: 1px; }
+.line-3 { top: 40%; left: 80%; width: 150px; height: 1px; }
+
+/* Subscription & Mascot Styles */
+.subscription-section {
+    padding: var(--spacing-xl) 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mascot-container {
+    width: 120px;
+    height: 120px;
+    margin-bottom: var(--spacing-md);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mascot-container.peeking {
+    transform: translateY(-10px) scale(1.1);
+}
+
+.mascot-container.impressed {
+    transform: scale(1.2) rotate(5deg);
+}
+
+.mascot-body { fill: var(--accent); }
+.mascot-eye { fill: white; }
+.mascot-eye-pupil { fill: black; transition: transform 0.2s; }
+.mascot-hands {
+    fill: var(--accent);
+    stroke: rgba(0,0,0,0.2);
+    stroke-width: 1;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.peeking .mascot-hands {
+    transform: translateY(-50px); /* Hands move up to cover eyes */
+}
+
+.custom-alert {
+    position: fixed;
+    bottom: var(--spacing-md);
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    border: 2px solid var(--accent);
+    box-shadow: 0 10px 30px var(--shadow-color);
+    z-index: 2000;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    font-weight: bold;
+}
+
+.custom-alert.visible {
+    transform: translateX(-50%) translateY(0);
+}
+
+.shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+/* Longread Styles */
+.longread-section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-md);
+}
+
+.longread-section h1 {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    margin-bottom: var(--spacing-md);
+    color: var(--accent);
+}
+
+.lead-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+}
+
+.content-block {
+    margin-bottom: var(--spacing-md);
+}
+
+.content-block p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
+/* Cyberpunk specific overrides for reading */
+[data-theme="cyberpunk"] .longread-section {
+    border-left: 2px solid var(--accent);
+    padding-left: var(--spacing-md);
+}
+
+/* Background Canvas Layer */
+#bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: auto;
+}

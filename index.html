@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Digital Experience | High-End Brand</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+
+    <main>
+        <!-- Module 1: Auth Morphing -->
+        <section class="auth-section">
+            <div class="parallax-lines">
+                <div class="parallax-line line-1"></div>
+                <div class="parallax-line line-2"></div>
+                <div class="parallax-line line-3"></div>
+            </div>
+
+            <div class="auth-container">
+                <h2>Access Portal</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label>Identifier</label>
+                        <input type="text" class="form-input" placeholder="Enter your ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Security Key</label>
+                        <input type="password" class="form-input" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="auth-submit-btn">
+                        <span>Enter</span>
+                        <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                            <path class="btn-morph-path" d="M 10 10 Q 100 10 190 10 Q 190 30 190 50 Q 100 50 10 50 Q 10 30 10 10 Z" />
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Module 3: Subscription & Mascot -->
+        <section class="subscription-section container">
+            <div class="mascot-container">
+                <svg viewBox="0 0 100 100">
+                    <circle class="mascot-body" cx="50" cy="50" r="45" />
+                    <circle class="mascot-eye" cx="35" cy="40" r="8" />
+                    <circle class="mascot-eye" cx="65" cy="40" r="8" />
+                    <circle class="mascot-eye-pupil" cx="35" cy="40" r="3" />
+                    <circle class="mascot-eye-pupil" cx="65" cy="40" r="3" />
+                    <path class="mascot-mouth" d="M 40 75 Q 50 75 60 75" stroke="black" stroke-width="2" fill="none" />
+                    <g class="mascot-hands">
+                        <rect x="25" y="80" width="15" height="10" rx="5" />
+                        <rect x="60" y="80" width="15" height="10" rx="5" />
+                    </g>
+                </svg>
+            </div>
+
+            <div class="auth-container">
+                <h2>Join the Elite</h2>
+                <form id="subscription-form">
+                    <div class="form-group">
+                        <label>Neural Email</label>
+                        <input type="email" id="sub-email" class="form-input" placeholder="you@frequency.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Secure Key</label>
+                        <input type="password" id="sub-password" class="form-input" placeholder="••••••••" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Key</label>
+                        <input type="password" id="sub-confirm" class="form-input" placeholder="••••••••" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Credits (Card)</label>
+                        <input type="text" id="sub-card" class="form-input" placeholder="0000-0000-0000-0000" required>
+                    </div>
+                    <button type="submit" class="auth-submit-btn">
+                        <span>Subscribe</span>
+                        <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                            <path class="btn-morph-path" d="M 10 10 Q 100 10 190 10 Q 190 30 190 50 Q 100 50 10 50 Q 10 30 10 10 Z" />
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Module 4: Content Longread -->
+        <section class="longread-section container" id="longread">
+            <article>
+                <h1>The Future of Human-Centric Code</h1>
+                <p class="lead-text">In an era of automated templates, the soul of digital experience lies in the precision of custom engineering.</p>
+
+                <div class="content-block">
+                    <h2>Chapter I: The Particle Dance</h2>
+                    <p>Observe the background. It isn't a static image or a pre-rendered video. It's a living mathematical ecosystem. Every particle calculates its trajectory in real-time, influenced by your presence and the invisible waves of the Perlin noise field.</p>
+                    <p>When you click, you don't just trigger an event; you create a ripple in the fabric of the interface. This is damped oscillation in action—physics translated into pixels.</p>
+                </div>
+
+                <div class="content-block">
+                    <h2>Chapter II: Emotional Interfaces</h2>
+                    <p>Why should forms be cold and clinical? Our authentication portal morphs its very geometry as you approach it. The mascot doesn't just sit there—it watches, judges, and celebrates your security choices. This is the "Dark Side" of UX: an interface that has an opinion.</p>
+                </div>
+
+                <div class="content-block">
+                    <h2>Chapter III: The Chameleon Core</h2>
+                    <p>Whether it's the stark clarity of high noon or the neon-soaked streets of a cyberpunk future, the interface adapts. Through a rigid hierarchy of CSS Custom Properties, we achieve WCAG AAA compliance without sacrificing aesthetic audacity.</p>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
